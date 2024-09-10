@@ -1,0 +1,73 @@
+Q.2 Find the Missing Number
+
+You are given an array arr containing n-1 distinct integers. The array consists of integers taken from the range 1 to n, meaning one integer is missing from this sequence. Your task is to find the missing integer.
+
+Input:
+An integer array arr of size n-1 where the elements are distinct and taken from the range 1 to n.
+Example : arr = [1, 2, 4, 5]
+
+Output:
+Return the missing integer from the array.
+Example: Missing number: 3
+
+Constraints:
+The array contains exactly n-1 distinct integers, and all integers are in the range [1, n].
+You must solve the problem with a time complexity of O(n).
+The space complexity should be O(1) (constant space).
+1 ≤ n ≤ 10^6
+
+Test Cases:
+Test Case 1
+Input: [1, 2, 4, 5]
+Output: 3
+Test Case 2:
+Input: [2, 3, 4, 5]
+Output: 1
+Test Case 3:
+Input: [1, 2, 3, 4]
+Output: 5
+Test Case 4:
+Input: [1]
+Output: 2
+Test Case 5:
+Input: [1, 2, 3, ..., 999999]
+Output: 1000000
+
+Edge Cases:
+The smallest possible array where n = 2. The missing number can only be 1 or 2.
+The largest possible array where n = 10^6.
+
+Soln:
+
+Approach 1:
+	int arr[]={1,2,3,4};
+		int xor1=0;int xor2=0;
+		for(int i=0;i<arr.length;i++){
+		    xor1=xor1^arr[i];
+		}
+		for(int i=1;i<=arr.length+1;i++){
+		    xor2=xor2^i;
+		}
+		System.out.println(xor1^xor2);
+
+  Time:O(n);
+  Space:O(1)
+
+ 
+  Approach 2:
+		int arr[]={1,2,4,5};
+		int count=0;
+		int arr1[]= new int[arr.length+1];
+		Arrays.fill(arr1,0);
+		for(int i=0;i<arr.length;i++){
+		    arr1[arr[i]-1]=1;
+		}
+		for(int i=0;i<arr1.length;i++){
+		    if(arr1[i]==0){
+		        count=i+1;
+		    }
+		}
+		System.out.println(count);
+Time: O(n)
+Space:O(1)
+  
