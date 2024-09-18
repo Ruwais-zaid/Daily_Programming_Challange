@@ -1,0 +1,19 @@
+Q.10
+Group Anagram
+Soln:
+ String str[]={"eat","tea","tan","ate","nat","bat"};
+        HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+
+        for(String x:str){
+            char arr[]=x.toCharArray();
+            Arrays.sort(arr);
+            String sorted = new String(arr);
+            if(!map.containsKey(sorted)){
+                map.put(sorted ,new ArrayList<>());
+            }
+            map.get(sorted).add(x);
+        }
+        System.out.println(map.values());
+}
+Time:O(nlogn)
+Space:O(n)
