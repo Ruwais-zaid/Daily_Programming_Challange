@@ -1,0 +1,28 @@
+Q.11
+Soln:
+import java.util.*;
+public class Main
+{
+    
+    public static void findallperm(String a,String ans,HashSet<String> ls){
+        if(a.length()==0){
+            ls.add(ans);
+            return;
+        }
+        
+        for(int i=0;i<a.length();i++){
+            char ch=a.charAt(i);
+            String first= a.substring(0,i);
+            String second=a.substring(i+1);
+            String third= first+second;
+            findallperm(third,ans+ch,ls);
+        }
+    }
+	public static void main(String[] args) {
+		String a="aab";
+		HashSet<String> ls= new HashSet<>();
+		findallperm(a,"",ls);
+		System.out.println(ls);
+		
+	}
+}
