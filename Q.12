@@ -1,0 +1,33 @@
+Q.12
+Soln:
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		String  s="()";
+		Stack<Character> stk = new Stack<>();
+		for(int i=0;i<s.length();i++){
+		     char ch= s.charAt(i);
+		     if(ch=='(' || ch=='{' || ch=='['){
+		         stk.push(ch);
+		     }
+		     else{
+		         char peek=stk.peek();
+		         if((ch==')' && peek=='(') || (ch=='}' && peek=='{') || (ch==']' && peek=='[')){
+		             stk.pop();
+		         }
+		         else{
+		             break;
+		         }
+		     }
+		}
+		if(stk.isEmpty()){
+		    System.out.println(true);
+		}
+		else{
+		    System.out.println(false);
+		}
+	}
+}
+Time:O(n)
+Space:O(n)
