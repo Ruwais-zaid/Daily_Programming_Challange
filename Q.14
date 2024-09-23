@@ -1,0 +1,87 @@
+Q.14
+SOLN:
+package Sliding_Window;
+
+import java.util.HashMap;
+
+public class Count_Substring_exactly_K {
+    public static void remove(HashMap<Character,Integer> map, char ch) {
+        if (map.get(ch) == 1) {
+            map.remove(ch);
+        } else {
+            map.put(ch, map.get(ch) - 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        String s = "pqpqs";
+        int ans = 0;
+        int k = 2;
+
+        HashMap<Character, Integer> map1 = new HashMap<>();
+        HashMap<Character, Integer> map2 = new HashMap<>();
+
+        int is = -1, ib = -1, j = -1;
+
+        while (true) {
+            boolean flag1 = false;
+            boolean flag2 = false;
+            boolean flag3 = false;
+
+            // Expanding `ib` to maintain exactly k distinct characters
+            while (ib < s.length() - 1) {
+                flag1 = true;
+                ib++;
+                char ch = s.charAt(ib);
+                map1.put(ch, map1.getOrDefault(ch, 0) + 1);
+
+                if (map1.size() == k + 1) {
+                    remove(map1, ch);
+                    ib--;
+                    break;
+                }
+            }
+
+            // Expanding `is` to maintain exactly k-1 distinct characters
+            while (is < ib) {
+                flag2 = true;
+                is++;
+                char ch = s.charAt(is);
+                map2.put(ch, map2.getOrDefault(ch, 0) + 1);
+
+                if (map2.size() == k) {
+                    remove(map2, ch);
+                    is--;
+                    break;
+                }
+            }
+
+            // Count valid substrings between `is` and `ib`
+            while (j < is) {
+                flag3 = true;
+                j++;
+
+                if (map1.size() == k && map2.size() == k - 1) {
+                    ans += ib - is;
+                }
+
+                char ch = s.charAt(j);
+                remove(map1, ch);
+                remove(map2, ch);
+
+                if (map1.size() < k || map2.size() < k - 1) {
+                    break;
+                }
+            }
+
+            if (!flag1 && !flag2 && !flag3) {
+                break;
+            }
+        }
+
+        System.out.println(ans);
+    }
+}
+
+Time:O(n)
+Space:O(n)
