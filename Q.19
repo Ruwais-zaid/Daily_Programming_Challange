@@ -1,0 +1,45 @@
+Q.19
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		String s="5";
+		String arr[]=s.split(" ");
+		Stack<Integer> stk = new Stack<>();
+		for(int i=0;i<arr.length;i++){
+		    String ch=arr[i];
+		    if(!ch.equals("+") && !ch.equals("-") && !ch.equals("*") && !ch.equals("/")){
+		        try{
+		            int ch1=Integer.parseInt(ch);
+		            stk.push(ch1);
+		            
+		        } catch(NumberFormatException e){
+		            break;
+		        }
+		        
+		    }
+		   else{
+		        int top1=stk.peek();
+		        stk.pop();
+		        int top2=stk.peek();
+		        stk.pop();
+		        int ans=0;
+		        if(ch.equals("+")){
+		            ans=top2+top1;
+		            
+		        }
+		        else if(ch.equals("-")){
+		            ans=top2-top1;
+		        }
+		        else if(ch.equals("*")){
+		            ans=top2*top1;
+		        }
+		        else{
+		            ans=top2/top1;
+		        }
+		        stk.push(ans);
+		    }
+		}
+		System.out.println(stk.peek();
+	}
+}
