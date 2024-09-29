@@ -1,0 +1,41 @@
+Q.21
+REVERSE TSTACK USING RECURESION
+public class Main
+{
+    
+    public static void insertbottom(Stack<Integer> stk,int top){
+        if(stk.isEmpty()){
+            stk.push(top);
+            return;
+        }
+        
+        int top1 = stk.peek();
+        stk.pop();
+        insertbottom(stk,top);
+        stk.push(top1);
+    }
+    
+    public static void reverse(Stack<Integer> stk){
+        if(stk.isEmpty()){
+            return;
+        }
+        
+        int top=stk.peek();
+        stk.pop();
+        reverse(stk);
+        insertbottom(stk,top);
+    }
+	public static void main(String[] args) {
+		 int arr[]={3,4,1,2};
+		 Stack<Integer> stk = new Stack<Integer>();
+		 for(int i=0;i<arr.length;i++){
+		     stk.push(arr[i]);
+		 }
+		 //before reverse
+		  System.out.println(stk);
+		  //afterreverse
+		  reverse(stk);
+		  System.out.println(stk);
+		 
+	}
+}
