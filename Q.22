@@ -1,0 +1,57 @@
+Day 22
+First Element appear K time
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+import java.util.*;
+
+public class Main
+{
+	public static void main(String[] args) {
+	    
+	    int arr[]= {10};
+	    int n = arr.length;
+	    int ans =0;
+	    int k=1;
+	    
+	    Map<Integer,Integer> map = new HashMap<>();
+	    for(int i=0;i<arr.length;i++){
+	        map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+	    }
+	    
+	    PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>(
+	        (a,b)->{
+	            int freq  = b.getValue().compareTo(a.getValue());
+	            if(freq==0){
+	                return b.getKey().compareTo(a.getKey());
+	            }
+	            else{
+	                return freq;
+	            }
+	        }
+	        );
+	        
+	        pq.addAll(map.entrySet());
+	        
+	        while(!pq.isEmpty()){
+	            Map.Entry<Integer,Integer> m1= pq.poll();
+	            if(m1.getValue()==k){
+	                ans=m1.getKey();
+	                
+	            }
+	            else{
+	                ans=-1;
+	            }
+	            break;
+	        }
+	        System.out.println(ans);
+	}
+}
+
+Time : O(n);
+Space : O(n);
+Data Structure : Priority Queue
