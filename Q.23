@@ -1,0 +1,57 @@
+Day 23
+
+Sliding Window Maximum 
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+import java.util.*;
+
+public class Main
+{
+	public static void main(String[] args) {
+		 int arr[]={1,3,-1,-3,5,3,6,7};
+		 int n= arr.length;
+		 
+		 ArrayList<Integer> list = new ArrayList<>();
+		 
+		int k= 3;
+		ArrayDeque<Integer> deq= new ArrayDeque<>();
+		for(int i=0;i<k;i++){
+		    
+		    while(!deq.isEmpty() && arr[i]>=arr[deq.getFirst()]){
+		         
+		         deq.removeLast();
+		    }
+		    deq.addLast(i);
+		}
+		if(deq.size()>0){
+		    
+		    list.add(arr[deq.getFirst()]);
+		    
+		}
+		for(int i=k;i<arr.length;i++){
+		    
+		    if(!deq.isEmpty() && i-deq.getFirst()>=k){
+		        deq.removeFirst();
+		        
+		    }
+		    
+		    while(!deq.isEmpty() && arr[i]>=arr[deq.getFirst()] ){
+		        deq.removeLast();
+		    }
+		    deq.addLast(i);
+		    
+		    if(deq.size()>0){
+		        list.add(arr[deq.getFirst()]);
+		    }
+		}
+		System.out.println(list);
+		
+	}
+}
+Time : O(n)
+Space : O(n)
