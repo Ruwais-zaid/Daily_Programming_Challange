@@ -1,0 +1,17 @@
+Q.25 Check if Binary Tree or not
+public static boolean check_bst(tree root,int min,int max){
+
+        if(root==null){
+            return true;
+        }
+
+        boolean left= check_bst(root.left,min,root.data);
+        boolean right  = check_bst(root.right, root.data, max);
+        if(left&& right){
+            if(root.data>min && root.data<max){
+                return true;
+            }
+        }
+        return false;
+
+    }
