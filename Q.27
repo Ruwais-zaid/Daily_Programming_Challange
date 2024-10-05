@@ -1,0 +1,100 @@
+Q.27 Shortest path in a graph atq to edge
+package Graph;
+
+import java.util.*;
+
+public class Dijkstra_Algo {
+
+    // Method to create adjacency list
+    public static void createadj(HashMap<Integer, List<HashMap<Integer, Integer>>> adj, int u, int v, int weight, boolean direction) {
+        HashMap<Integer, Integer> edge = new HashMap<>();
+        edge.put(v, weight);
+
+        adj.computeIfAbsent(u, k -> new ArrayList<>()).add(edge);
+
+        if (!direction) {
+            HashMap<Integer, Integer> reverseEdge = new HashMap<>();
+            reverseEdge.put(u, weight);
+            adj.computeIfAbsent(v, k -> new ArrayList<>()).add(reverseEdge);
+        }
+    }
+
+    // Method to print adjacency list
+    public static void printadj(HashMap<Integer, List<HashMap<Integer, Integer>>> adj) {
+        for (Map.Entry<Integer, List<HashMap<Integer, Integer>>> neighbour : adj.entrySet()) {
+            System.out.print(neighbour.getKey() + " -> ");
+            for (HashMap<Integer, Integer> vertices : neighbour.getValue()) {
+                for (Map.Entry<Integer, Integer> entry : vertices.entrySet()) {
+                    System.out.print("(" + entry.getKey() + ", " + entry.getValue() + "), ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public static void dijkstra(HashMap<Integer, List<HashMap<Integer, Integer>>> adjList, int src, int vertices) {
+        // Initialize the distance list with maximum values
+        List<Integer> distance = new ArrayList<>(Collections.nCopies(vertices, Integer.MAX_VALUE));
+        distance.set(src, 0);
+
+        // Priority queue to select the vertex with the smallest distance
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+        pq.add(new int[]{src, 0});
+
+        while (!pq.isEmpty()) {
+            int[] node = pq.poll();
+            int u = node[0];
+            int distU = node[1];
+
+            if (distU > distance.get(u)) {
+                continue;
+            }
+
+            List<HashMap<Integer, Integer>> neighbors = adjList.getOrDefault(u, new ArrayList<>());
+            for (HashMap<Integer, Integer> neighbor : neighbors) {
+                for (Map.Entry<Integer, Integer> entry : neighbor.entrySet()) {
+                    int v = entry.getKey();
+                    int weightUV = entry.getValue();
+                    int newDist = distU + weightUV;
+
+                    if (newDist < distance.get(v)) {
+                        distance.set(v, newDist);
+                        pq.add(new int[]{v, newDist});
+                    }
+                }
+            }
+        }
+
+        System.out.println("Shortest distances from source " + src + ":");
+        for (int i = 0; i < distance.size(); i++) {
+            System.out.println("Vertex " + i + ": " + distance.get(i));
+        }
+    }
+
+    public static void main(String[] args) {
+        HashMap<Integer, List<HashMap<Integer, Integer>>> adjList = new HashMap<>();
+        int edges, vertices;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the number of edges:");
+        edges = sc.nextInt();
+        System.out.println("Enter the number of vertices:");
+        vertices = sc.nextInt();
+
+        System.out.println("Enter each edge in the format: u v weight");
+        for (int i = 0; i < edges; i++) {
+            int u, v, weight;
+            u = sc.nextInt();
+            v = sc.nextInt();
+            weight = sc.nextInt();
+            createadj(adjList, u, v, weight, false);
+        }
+
+        System.out.println("Printing the Adjacency List...");
+        printadj(adjList);
+
+        // Dijkstra's algorithm
+        System.out.println("Enter the source vertex:");
+        int src = sc.nextInt();
+        dijkstra(adjList, src, vertices);
+    }
+}
