@@ -1,0 +1,17 @@
+Q28 Check If a Tree is Symmetric or not
+ public static boolean check_symmetric(tree root1,tree root2){
+        if(root1==null && root2==null){
+            return true;
+        }
+        if(root1==null || root2==null){
+            return false;
+        }
+        boolean left =  check_symmetric(root1.left,root2.right);
+        boolean right  = check_symmetric(root1.right,root2.left);
+        if(left && right && root1.data== root2.data){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
